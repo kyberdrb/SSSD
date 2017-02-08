@@ -119,7 +119,7 @@ Po nainstalovani sa do adresara pridaju subory:
 	common-account
 	common-auth
 	common-password
-	common-session (tento subor treba vytvorit rucne)
+	common-session
 
 
 Obsah suboru "common-account":
@@ -253,6 +253,7 @@ session requisite                       pam_deny.so
 # since the modules above will each just jump around
 session required                        pam_permit.so
 # and here are more per-package modules (the "Additional" block)
+# pam_mkhomedir bolo treba doplnit rucne
 session required        pam_unix.so
 session required        pam_mkhomedir.so skel=/etc/skel/ umask=0022
 session optional                        pam_sss.so
@@ -261,3 +262,20 @@ session optional                        pam_sss.so
 
 
 
+
+
+
+Windows Server 2016 AD konfiguracia
+
+Server Manager -> Add roles and features ->
+	oznacit "Active Directory Domain Services"
+	features:
+		.NET Framework 4.6 Features
+
+pri "Results" treba kliknut na "Promote this server to a DC" a vypisat potrebne veci
+
+NetBios domain name:	SOS1.LOCAL
+
+Potom kliknut na Install a je hotovo.
+
+AD si automaticky vytv8ra DNS zaznamy pre pripojene zariadenia.
