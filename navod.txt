@@ -42,6 +42,7 @@ SSSD
 
 Vytvorime subor /etc/sssd/sssd.conf
 a pridelime mu opravnenia: chmod root:root 600
+OPRAVNENIA MUSIA BYT NASTAVENE NA 600, inak sa nespusti sluzba pri starte/restarte
 DOMENY PISEME VELKYM PISMOM (lebo windows)
 
 
@@ -261,6 +262,12 @@ session optional                        pam_sss.so
 
 
 
+Logy su v adresari 
+/var/log/sssd
+a
+/var/lib/sss
+	adresar 'db' uchovava subory 'cache' - tieto subory umoznnuju prihlasit sa pouzivatelom na linuxovy server aj v pripade, ze windows server vypadne
+	adresar 'mc' obsahuje binarne subory passwd a group ziskane z domenoveho radica
 
 
 
