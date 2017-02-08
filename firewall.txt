@@ -1,0 +1,9 @@
+Otvorit porty na INPUT (Linux - mozno podobne by trebalo otvorit aj na Windowse):
+
+3268	tcp		dport+sport
+123	tcp+udp		dport+sport	ntp
+389	tcp		dport+sport	ldap
+88	tcp+udp		dport+sport	kerberos
+dns
+http
+
