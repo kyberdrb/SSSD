@@ -1,0 +1,61 @@
+SSSD Win AD 2016, Linux - Debian
+
+net ads join -U Administrator
+
+Heslo pri vytvarani musi mat aspon 9 znakov, aspon 1 cislo, aspon 1 male pismeno a aspon 1 velke pismeno.
+
+
+
+
+
+PRIPOJENIE DO DOMENY
+
+Instalacia potrebnych balikov:
+	apt-get install krb5-user samba sssd ntp
+
+Konfiguracia:
+KERBEROS
+
+pri instalacii zadat:
+	SOS1.LOCAL - default realm
+	WINSERVER.SOS1.LOCAL - kdc
+	WINSERVER.SOS1.LOCAL - admin-server
+
+Potom povolime port 88.
+
+
+SAMBA
+
+Upravit subor /etc/samba/smb.conf
+
+[global]
+workgroup = SOS1
+client signing = yes
+client use spnego = yes
+kerberos method = secrets and keytab
+realm = SOS1.LOCAL
+security = ads
+
+
+
+SSSD
+
+Vytvorime subor /etc/sssd/sssd.conf
+a pridelime mu opravnenia: chmod root:root 600
+DOMENY PISEME VELKYM PISMOM (lebo windows)
+
+[sssd]
+services = nss, pam
+config_file_version = 2
+domains = SOS1.LOCAL
+debug_level = 9
+
+[domain/SOS1.LOCAL]
+id_provider = ad
+access_provider = ad
+override_homedir = /home/%u	#/home/%d/%u - 'd' - domena. 'u' - pouzivatel
+enumerate = true	#bez tohto to nefunguje
+
+
+
+
