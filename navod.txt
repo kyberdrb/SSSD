@@ -312,7 +312,19 @@ a
 
 
 APACHE
-<doplnit_tutorial>
+
+#Instalovat apache
+	apt-get install apache2
+# Umozni pripojit sa na domovsky priecinok cez web browser
+	a2enmod userdir
+# V tomto konfiguraku sa daju nastavit cesty k domovskemu priecinku, opravnenia ...
+	/etc/apache2/mods-enabled
+
+Domovsky priecinok musi mat prava 711
+
+Pripaja sa cez web browser na adresu
+	158.193.139.70/~<meno_pouzivatela>
+
 
 
 
