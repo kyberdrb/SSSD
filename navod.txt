@@ -1,5 +1,29 @@
 SSSD Win AD 2016, Linux - Debian
 
+
+
+
+Windows Server 2016 AD konfiguracia
+
+Server Manager -> Add roles and features ->
+	oznacit "Active Directory Domain Services"
+	features:
+		.NET Framework 4.6 Features
+
+pri "Results" treba kliknut na "Promote this server to a DC" a vypisat potrebne veci
+
+NetBios domain name:	SOS1.LOCAL
+
+Potom kliknut na Install a je hotovo.
+
+AD si automaticky vytv8ra DNS zaznamy pre pripojene zariadenia.
+
+
+
+
+
+DEBIAN KONFIGURACIA
+
 net ads join -U Administrator
 
 Heslo pri vytvarani musi mat aspon 9 znakov, aspon 1 cislo, aspon 1 male pismeno a aspon 1 velke pismeno.
@@ -67,7 +91,7 @@ ldap_id_mapping = True
 use_fully_qualified_names = True
 access_provider = ad
 #enumerate je volitelne - neodporuca sa pre realnu prevadzku. enumerate = true umozni vidiet pouzivatelske ucty v /etc/passwd
-#enumerate = true
+#enumerate = True
 fallback_homedir = /home/%d/%u
 override_homedir  = /home/%d/%u
 default_shell = /bin/bash
@@ -285,20 +309,10 @@ a
 
 
 
-Windows Server 2016 AD konfiguracia
 
-Server Manager -> Add roles and features ->
-	oznacit "Active Directory Domain Services"
-	features:
-		.NET Framework 4.6 Features
 
-pri "Results" treba kliknut na "Promote this server to a DC" a vypisat potrebne veci
-
-NetBios domain name:	SOS1.LOCAL
-
-Potom kliknut na Install a je hotovo.
-
-AD si automaticky vytv8ra DNS zaznamy pre pripojene zariadenia.
+APACHE
+<doplnit_tutorial>
 
 
 
