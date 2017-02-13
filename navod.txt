@@ -11,7 +11,7 @@ Heslo pri vytvarani musi mat aspon 9 znakov, aspon 1 cislo, aspon 1 male pismeno
 PRIPOJENIE DO DOMENY
 
 Instalacia potrebnych balikov:
-	apt-get install krb5-user samba sssd ntp
+	apt-get install krb5-user sssd ntp ntpdate realmd
 
 Konfiguracia:
 KERBEROS
@@ -23,18 +23,6 @@ pri instalacii zadat:
 
 Potom povolime port 88.
 
-
-SAMBA
-
-Upravit subor /etc/samba/smb.conf
-
-[global]
-workgroup = SOS1
-client signing = yes
-client use spnego = yes
-kerberos method = secrets and keytab
-realm = SOS1.LOCAL
-security = ads
 
 
 
@@ -49,7 +37,7 @@ DOMENY PISEME VELKYM PISMOM (lebo windows)
 [sssd]
 services = nss, pam
 config_file_version = 2
-domains = SOS1.LOCAL
+domains = sos1.local
 debug_level = 9
 
 [nss]
@@ -65,21 +53,44 @@ offline_credentials_expiration = 2
 offline_failed_login_attempts = 3
 offline_failed_login_delay = 5
 
-[domain/SOS1.LOCAL]
+
+
+[domain/sos1.local]
+ad_domain = sos1.local
+krb5_realm = SOS1.LOCAL
+realmd_tags = manages-system joined-with-samba
+cache_credentials = True
 id_provider = ad
+krb5_store_password_if_offline = True
+default_shell = /bin/bash
+ldap_id_mapping = True
+use_fully_qualified_names = True
 access_provider = ad
+#enumerate je volitelne - neodporuca sa pre realnu prevadzku. enumerate = true umozni vidiet pouzivatelske ucty v /etc/passwd
+#enumerate = true
+fallback_homedir = /home/%d/%u
+override_homedir  = /home/%d/%u
+default_shell = /bin/bash
 
 #ldap_scheme = rfc2307bis
 #ldap_group_name = uniqueMember
 #ldap_netgroup_search_base = ou=Netgroup,dc=sos1,dc=local
 
-override_homedir  = /home/%u
-default_shell = /bin/bash
-
-#use_fully_qualified_names = true
-enumerate = true
 
 
+
+
+REALMD
+
+# pripojenie do domeny
+# tento prikaz zmeni potrebne veci v sssd konfiguraku
+realm join --user=Administrator@SOS1.LOCAL SOS1.LOCAL
+
+# opustenie domeny
+realm leave --user=Administrator@SOS1.LOCAL SOS1.LOCAL
+
+# stav hosta v domene
+realm status
 
 
 
@@ -255,7 +266,8 @@ session requisite                       pam_deny.so
 # since the modules above will each just jump around
 session required                        pam_permit.so
 # and here are more per-package modules (the "Additional" block)
-# pam_mkhomedir bolo treba doplnit rucne
+
+# pam_mkhomedir bolo treba doplnit rucne!!!
 session required        pam_unix.so
 session required        pam_mkhomedir.so skel=/etc/skel/ umask=0022
 session optional                        pam_sss.so
@@ -287,3 +299,11 @@ NetBios domain name:	SOS1.LOCAL
 Potom kliknut na Install a je hotovo.
 
 AD si automaticky vytv8ra DNS zaznamy pre pripojene zariadenia.
+
+
+
+
+
+OVERENIE
+
+getent passwd <pouzivatel>
