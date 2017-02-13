@@ -74,6 +74,7 @@ access_provider = ad
 #ldap_netgroup_search_base = ou=Netgroup,dc=sos1,dc=local
 
 override_homedir  = /home/%u
+default_shell = /bin/bash
 
 #use_fully_qualified_names = true
 enumerate = true
