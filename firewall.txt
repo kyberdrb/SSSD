@@ -1,12 +1,12 @@
 Otvorit porty na INPUT (Linux - mozno podobne by trebalo otvorit aj na Windowse):
 
-3268	tcp		dport+sport	global catalog - ldap search
-123	tcp+udp		dport+sport	ntp
-389	tcp		dport+sport	ldap
-88	tcp+udp		dport+sport	kerberos
-53	tcp+udp		dport+sport	dns
-80	tcp		dport+sport	http
-9418	tcp		dport+sport	git
+3268  tcp		dport+sport	global catalog - ldap search
+123 tcp+udp		dport+sport	ntp
+636 tcp		dport+sport	ldaps
+88  tcp+udp		dport+sport	kerberos
+53  tcp+udp		dport+sport	dns
+80  tcp		dport+sport	http
+9418  tcp		dport+sport	git
 
 Sources:
 https://technet.microsoft.com/en-us/library/cc978012.aspx
